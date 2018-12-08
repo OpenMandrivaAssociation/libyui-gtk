@@ -1,0 +1,73 @@
+From 1191d564180b0a2ca489fdc762c302cc65a8c876 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Bj=C3=B6rn=20Esser?= <besser82@fedoraproject.org>
+Date: Wed, 19 Apr 2017 20:37:11 +0200
+Subject: [PATCH] Replace gtk_menu_popup()
+
+---
+ src/YGMenuButton.cc  | 4 +++-
+ src/ygtkmenubutton.c | 6 ++++--
+ src/ygtktreeview.c   | 9 +++++++--
+ 3 files changed, 14 insertions(+), 5 deletions(-)
+
+diff --git a/src/YGMenuButton.cc b/src/YGMenuButton.cc
+index 5863467..ba6cc58 100644
+--- a/src/YGMenuButton.cc
++++ b/src/YGMenuButton.cc
+@@ -92,7 +92,9 @@ class YGContextMenu : public YContextMenu, public YGWidget
+ 		GtkWidget *menu = getWidget();
+ 		doCreateMenu (menu, itemsBegin(), itemsEnd());
+ 		gtk_widget_show_all (menu);
+-		gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL, 3, gtk_get_current_event_time());
++
++		// gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL, 3, gtk_get_current_event_time());
++		gtk_menu_popup_at_pointer (GTK_MENU (menu), NULL);
+ 	}
+ 
+ 	// callbacks
+diff --git a/src/ygtkmenubutton.c b/src/ygtkmenubutton.c
+index 5ed81a5..e825538 100644
+--- a/src/ygtkmenubutton.c
++++ b/src/ygtkmenubutton.c
+@@ -191,8 +191,10 @@ static void ygtk_menu_button_show_popup (YGtkMenuButton *button)
+ 
+ 	guint activate_time = gtk_get_current_event_time();
+ 	if (GTK_IS_MENU (popup))
+-		gtk_menu_popup (GTK_MENU (popup), NULL, NULL, ygtk_menu_button_get_menu_pos,
+-		                button, 0, activate_time);
++		// gtk_menu_popup (GTK_MENU (popup), NULL, NULL, ygtk_menu_button_get_menu_pos,
++		//                button, 0, activate_time);
++		gtk_menu_popup_at_pointer (GTK_MENU (popup), NULL);
++
+ 	else {  // GTK_IS_WINDOW
+ 		gint x, y;
+ 		ygtk_menu_button_get_popup_pos (button, &x, &y);
+diff --git a/src/ygtktreeview.c b/src/ygtktreeview.c
+index ad59efd..cf21828 100644
+--- a/src/ygtktreeview.c
++++ b/src/ygtktreeview.c
+@@ -40,9 +40,11 @@ static void _gtk_widget_destroy (gpointer widget)
+ static guint32 _popup_time = 0;
+ static gint _popup_x = 0, _popup_y = 0;
+ 
++/*
+ static void _ygtk_tree_view_menu_position_func (
+ 	GtkMenu *menu, gint *x, gint *y, gboolean *push_in, gpointer user_data)
+ { *x = _popup_x; *y = _popup_y; }
++*/
+ 
+ void ygtk_tree_view_popup_menu (YGtkTreeView *view, GtkWidget *menu)
+ {
+@@ -52,8 +54,11 @@ void ygtk_tree_view_popup_menu (YGtkTreeView *view, GtkWidget *menu)
+ 	g_object_set_data_full (G_OBJECT (view), "popup", menu, _gtk_widget_destroy);
+ 
+ 	gtk_menu_attach_to_widget (GTK_MENU (menu), widget, NULL);
+-	gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
+-		_ygtk_tree_view_menu_position_func, widget,  3, _popup_time);
++
++	// gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
++	//	_ygtk_tree_view_menu_position_func, widget,  3, _popup_time);
++	gtk_menu_popup_at_pointer (GTK_MENU (menu), NULL);
++
+ 	gtk_widget_show_all (menu);
+ }
+ 

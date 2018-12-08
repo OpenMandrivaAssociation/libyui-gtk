@@ -1,0 +1,30 @@
+From 8ab57a0d462e3d65859cd56bcd1b73eacba9740d Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Bj=C3=B6rn=20Esser?= <besser82@fedoraproject.org>
+Date: Wed, 19 Apr 2017 17:13:04 +0200
+Subject: [PATCH] Replace gtk_alignment_set_padding()
+
+---
+ src/YGFrame.cc | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/src/YGFrame.cc b/src/YGFrame.cc
+index 4f3e887..02bcbb3 100644
+--- a/src/YGFrame.cc
++++ b/src/YGFrame.cc
+@@ -24,8 +24,14 @@ GtkWidget *m_containee;
+ 	            GTK_TYPE_FRAME, "shadow-type", GTK_SHADOW_NONE, NULL)
+ 	{
+ 		m_containee = gtk_alignment_new (0, 0, 1, 1);
+-		gtk_alignment_set_padding (GTK_ALIGNMENT (m_containee),
+-			0, 0, CHILD_INDENTATION, 0);
++
++		// gtk_alignment_set_padding (GTK_ALIGNMENT (m_containee),
++		//	0, 0, CHILD_INDENTATION, 0);
++		gtk_widget_set_margin_top    (m_containee, 0);
++		gtk_widget_set_margin_bottom (m_containee, 0);
++		gtk_widget_set_margin_start  (m_containee, CHILD_INDENTATION);
++		gtk_widget_set_margin_end    (m_containee, 0);
++
+ 		gtk_widget_show (m_containee);
+ 		gtk_container_add (GTK_CONTAINER (getWidget()), m_containee);
+ 	}

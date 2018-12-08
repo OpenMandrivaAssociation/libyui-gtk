@@ -1,0 +1,134 @@
+From 2c5c33d978b95bc9dd7613ddfc61810fa42c2ec8 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Bj=C3=B6rn=20Esser?= <besser82@fedoraproject.org>
+Date: Wed, 19 Apr 2017 16:15:11 +0200
+Subject: [PATCH] Replace gtk_misc_set_alignment()
+
+---
+ src/YGDialog.cc  |  5 ++++-
+ src/YGLabel.cc   |  5 ++++-
+ src/YGWidget.cc  | 12 ++++++++++--
+ src/ygtksteps.c  | 11 +++++++++--
+ src/ygtkwizard.c | 12 ++++++++++--
+ 5 files changed, 37 insertions(+), 8 deletions(-)
+
+diff --git a/src/YGDialog.cc b/src/YGDialog.cc
+index 8649dba..d811ec1 100644
+--- a/src/YGDialog.cc
++++ b/src/YGDialog.cc
+@@ -319,7 +319,10 @@ YGDialog::YGDialog (YDialogType dialogType, YDialogColorMode colorMode)
+             (colorMode == YDialogWarnColor ? "dialog-warning" : "dialog-information",
+              GTK_ICON_SIZE_DIALOG);
+ 
+-        gtk_misc_set_alignment (GTK_MISC (icon), 0.5, 0);
++	// gtk_misc_set_alignment (GTK_MISC (icon), 0.5, 0);
++	gtk_widget_set_halign (icon, GTK_ALIGN_CENTER);
++	gtk_widget_set_valign (icon, GTK_ALIGN_START);
++
+         gtk_misc_set_padding   (GTK_MISC (icon), 0, 12);
+ 
+         gtk_box_pack_start (GTK_BOX (getWidget()), icon,    FALSE, FALSE, 12);
+diff --git a/src/YGLabel.cc b/src/YGLabel.cc
+index 71f51c4..495bc97 100644
+--- a/src/YGLabel.cc
++++ b/src/YGLabel.cc
+@@ -15,7 +15,10 @@ class YGLabel : public YLabel, public YGWidget
+     : YLabel (NULL, text, heading, outputField),
+       YGWidget (this, parent, GTK_TYPE_LABEL, NULL)
+ 	{
+-		gtk_misc_set_alignment (GTK_MISC (getWidget()), 0.0, 0.5);
++		// gtk_misc_set_alignment (GTK_MISC (getWidget()), 0.0, 0.5);
++		gtk_widget_set_halign (getWidget(), GTK_ALIGN_START);
++		gtk_widget_set_valign (getWidget(), GTK_ALIGN_CENTER);
++
+ 		if (outputField) {
+ 			gtk_label_set_selectable (GTK_LABEL (getWidget()), TRUE);
+ 			gtk_label_set_single_line_mode (GTK_LABEL (getWidget()), TRUE);
+diff --git a/src/YGWidget.cc b/src/YGWidget.cc
+index 4cfacf4..0afd606 100644
+--- a/src/YGWidget.cc
++++ b/src/YGWidget.cc
+@@ -247,7 +247,11 @@ YGLabeledWidget::YGLabeledWidget (YWidget *ywidget, YWidget *parent,
+ 
+ 	// Create the label
+ 	m_label = gtk_label_new ("");
+-	gtk_misc_set_alignment (GTK_MISC (m_label), 0.0, 0.5);
++
++	// gtk_misc_set_alignment (GTK_MISC (m_label), 0.0, 0.5);
++	gtk_widget_set_halign (m_label, GTK_ALIGN_START);
++	gtk_widget_set_valign (m_label, GTK_ALIGN_CENTER);
++
+ /*	if (label_ori == YD_HORIZ)
+ 		gtk_label_set_line_wrap (GTK_LABEL (m_label), TRUE);*/
+ 	gtk_widget_show (m_label);
+@@ -277,7 +281,11 @@ YGLabeledWidget::YGLabeledWidget (YWidget *ywidget, YWidget *parent,
+ 
+ 	// Create the label
+ 	m_label = gtk_label_new ("");
+-	gtk_misc_set_alignment (GTK_MISC (m_label), 0.0, 0.5);
++
++	// gtk_misc_set_alignment (GTK_MISC (m_label), 0.0, 0.5);
++	gtk_widget_set_halign (m_label, GTK_ALIGN_START);
++	gtk_widget_set_valign (m_label, GTK_ALIGN_CENTER);
++
+ /*	if (label_ori == YD_HORIZ)
+ 		gtk_label_set_line_wrap (GTK_LABEL (m_label), TRUE);*/
+ 	gtk_widget_show (m_label);
+diff --git a/src/ygtksteps.c b/src/ygtksteps.c
+index d5c0077..eefe2e9 100644
+--- a/src/ygtksteps.c
++++ b/src/ygtksteps.c
+@@ -140,7 +140,11 @@ gint ygtk_steps_append (YGtkSteps *steps, const gchar *text)
+ 	GtkWidget *label = gtk_label_new (text);
+ 	GdkRGBA black = { 0.0, 0.0, 0.0, 1.0 };
+ 	gtk_widget_override_color (label, GTK_STATE_NORMAL, &black);
+-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
++
++	// gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
++	gtk_widget_set_halign (label, GTK_ALIGN_START);
++	gtk_widget_set_valign (label, GTK_ALIGN_START);
++
+ 	int mark_width = 10;
+ 	pango_layout_get_pixel_size (steps->check_mark_layout, &mark_width, NULL);
+ 	gtk_misc_set_padding (GTK_MISC (label), mark_width+12, 0);
+@@ -155,7 +159,10 @@ void ygtk_steps_append_heading (YGtkSteps *steps, const gchar *heading)
+ 	GdkRGBA black = { 0.0, 0.0, 0.0, 1.0 };
+ 	gtk_widget_override_color (label, GTK_STATE_NORMAL, &black);
+ 	g_object_set_data (G_OBJECT (label), "is-header", GINT_TO_POINTER (1));
+-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
++
++	//gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
++	gtk_widget_set_halign (label, GTK_ALIGN_START);
++	gtk_widget_set_valign (label, GTK_ALIGN_START);
+ 
+ 	PangoAttrList *attrbs = pango_attr_list_new();
+ 	pango_attr_list_insert (attrbs, pango_attr_weight_new (PANGO_WEIGHT_BOLD));
+diff --git a/src/ygtkwizard.c b/src/ygtkwizard.c
+index 0efc9c4..69afc2b 100644
+--- a/src/ygtkwizard.c
++++ b/src/ygtkwizard.c
+@@ -161,7 +161,11 @@ static void ygtk_help_dialog_init (YGtkHelpDialog *dialog)
+ 	char *label_str = ygutils_mapKBAccel (_("&Find:"));
+ 	GtkWidget *bottom_box, *label = gtk_label_new_with_mnemonic (label_str);
+ 	g_free (label_str);
+-	gtk_misc_set_alignment (GTK_MISC (label), 0, .5);
++
++	// gtk_misc_set_alignment (GTK_MISC (label), 0, .5);
++	gtk_widget_set_halign (label, GTK_ALIGN_START);
++	gtk_widget_set_valign (label, GTK_ALIGN_CENTER);
++
+ 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->search_entry);
+ 
+ 	bottom_box = YGTK_HBOX_NEW(2);
+@@ -439,7 +443,11 @@ static void ygtk_wizard_header_init (YGtkWizardHeader *header)
+ 
+ 	header->title = gtk_label_new ("");
+ 	gtk_label_set_ellipsize (GTK_LABEL (header->title), PANGO_ELLIPSIZE_END);
+-	gtk_misc_set_alignment (GTK_MISC (header->title), 0, 0.5);
++
++	// gtk_misc_set_alignment (GTK_MISC (header->title), 0, 0.5);
++	gtk_widget_set_halign (header->title, GTK_ALIGN_START);
++	gtk_widget_set_valign (header->title, GTK_ALIGN_CENTER);
++
+ 	ygutils_setWidgetFont (header->title, PANGO_STYLE_NORMAL, PANGO_WEIGHT_BOLD,
+ 	                       PANGO_SCALE_X_LARGE);
+ 	GdkRGBA black = { 0.0, 0.0, 0.0, 1.0 };

@@ -1,0 +1,22 @@
+From e48985c2384ee09fe60fd06003b013e90c94205a Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Bj=C3=B6rn=20Esser?= <besser82@fedoraproject.org>
+Date: Wed, 19 Apr 2017 15:37:16 +0200
+Subject: [PATCH] Remove obsolete gtk_container_set_resize_mode()
+
+---
+ src/YGDialog.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/YGDialog.cc b/src/YGDialog.cc
+index cccfaf2..5d7ce55 100644
+--- a/src/YGDialog.cc
++++ b/src/YGDialog.cc
+@@ -52,7 +52,7 @@ class YGWindow
+ 	YGWindow (bool _main_window, YGDialog *ydialog)
+ 	{
+ 		m_widget = ygtk_window_new();
+-		gtk_container_set_resize_mode (GTK_CONTAINER (m_widget), GTK_RESIZE_PARENT);
++		// gtk_container_set_resize_mode (GTK_CONTAINER (m_widget), GTK_RESIZE_PARENT);
+ 		g_object_ref_sink (G_OBJECT (m_widget));
+ 		gtk_window_set_has_resize_grip (GTK_WINDOW (m_widget), TRUE);
+ 

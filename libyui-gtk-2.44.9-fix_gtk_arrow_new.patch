@@ -1,0 +1,24 @@
+From 509292d88c1cf4bf198aab2d7e5e5d075f301722 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Bj=C3=B6rn=20Esser?= <besser82@fedoraproject.org>
+Date: Wed, 19 Apr 2017 21:49:06 +0200
+Subject: [PATCH] Replace gtk_arrow_new()
+
+---
+ src/ygtkmenubutton.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/ygtkmenubutton.c b/src/ygtkmenubutton.c
+index e825538..147279d 100644
+--- a/src/ygtkmenubutton.c
++++ b/src/ygtkmenubutton.c
+@@ -247,7 +247,9 @@ void ygtk_menu_button_set_label (YGtkMenuButton *button, const gchar *label)
+ 		GtkWidget *hbox, *arrow;
+ 		hbox = YGTK_HBOX_NEW(4);
+ 		gtk_box_set_homogeneous (GTK_BOX (hbox), FALSE);
+-		arrow = gtk_arrow_new (GTK_ARROW_DOWN, GTK_SHADOW_IN);
++		// arrow = gtk_arrow_new (GTK_ARROW_DOWN, GTK_SHADOW_IN);
++		arrow = gtk_image_new_from_icon_name ("pan-down-symbolic",
++						GTK_ICON_SIZE_BUTTON);
+ 		button->label = gtk_label_new ("");
+ 		gtk_box_pack_start (GTK_BOX (hbox), button->label, TRUE, TRUE, 0);
+ 		gtk_box_pack_start (GTK_BOX (hbox), arrow, FALSE, TRUE, 0);

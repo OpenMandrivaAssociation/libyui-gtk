@@ -1,0 +1,26 @@
+From 7f6cc848f21e9f76c7247e46e934c80c339a0371 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Bj=C3=B6rn=20Esser?= <besser82@fedoraproject.org>
+Date: Wed, 19 Apr 2017 18:16:16 +0200
+Subject: [PATCH] Replace gdk_cursor_new()
+
+---
+ src/ygtkwizard.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/src/ygtkwizard.c b/src/ygtkwizard.c
+index 69afc2b..34ccc46 100644
+--- a/src/ygtkwizard.c
++++ b/src/ygtkwizard.c
+@@ -485,7 +485,11 @@ static void ygtk_wizard_header_init (YGtkWizardHeader *header)
+ static gboolean ygtk_wizard_header_button_press_event (GtkWidget *widget, GdkEventButton *event)
+ {
+ 	if (event->button == 1) {
+-		GdkCursor *cursor = gdk_cursor_new (GDK_FLEUR);
++		// GdkCursor *cursor = gdk_cursor_new (GDK_FLEUR);
++		GdkCursor *cursor = gdk_cursor_new_for_display (
++						gdk_display_get_default (),
++						GDK_FLEUR);
++
+ 		gdk_window_set_cursor (event->window, cursor);
+ 		g_object_unref (cursor);
+ 

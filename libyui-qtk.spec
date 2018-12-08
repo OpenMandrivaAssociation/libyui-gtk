@@ -16,7 +16,7 @@ BuildRequires:	pkgconfig(libyui)
 BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(gdk-pixbuf-2.0)
 BuildRequires:	boost-devel
-BuildRequires:	sane-devel
+BuildRequires:	pkgconfig(sane-backends)
 BuildRequires:	cmake
 BuildRequires:	ninja
 BuildRequires:	doxygen

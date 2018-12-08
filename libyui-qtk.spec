@@ -2,7 +2,6 @@
 %define libname %mklibname  yui %{major}-gtk
 %define develname %mklibname yui-gtk -d
 
-
 Name:		libyui-gtk
 Version:	2.44.9
 Release:	1
@@ -12,16 +11,17 @@ Group:		System/Libraries
 URL:		https://github.com/libyui/libyui-gtk
 Source0:	%{name}-%{version}.tar.gz
 
-BuildRequires:    png-devel
-BuildRequires:    yui-devel >= 3.0.4
-BuildRequires:    libgtk+3.0-devel
-BuildRequires:    libgdk_pixbuf2.0-devel
-BuildRequires:    boost-devel
-BuildRequires:    sane-devel
-BuildRequires:    cmake
-BuildRequires:    doxygen
-BuildRequires:    ghostscript
-BuildRequires:    graphviz
+BuildRequires:	pkgconfig(libpng)
+BuildRequires:	pkgconfig(libyui)
+BuildRequires:	pkgconfig(gtk+-3.0)
+BuildRequires:	pkgconfig(gdk-pixbuf-2.0)
+BuildRequires:	boost-devel
+BuildRequires:	sane-devel
+BuildRequires:	cmake
+BuildRequires:	ninja
+BuildRequires:	doxygen
+BuildRequires:	ghostscript
+BuildRequires:	graphviz
 
 Requires:	libyui
 Requires:	gtk+3.0
@@ -69,8 +69,7 @@ This package provides headers files for libyui-ncurses development.
 #-----------------------------------------------------------------------
 
 %prep
-%setup -q
-%autopatch -p1
+%autosetup -p1
 
 %build
 ./bootstrap.sh

@@ -1,0 +1,12 @@
+diff --git a/src/YGDialog.cc b/src/YGDialog.cc
+index b9a0648..fc040c2 100644
+--- a/src/YGDialog.cc
++++ b/src/YGDialog.cc
+@@ -3,6 +3,7 @@
+  ********************************************************************/
+ 
+ #define YUILogComponent "gtk"
++#define protected public
+ 
+ #include "YGUI.h"
+ #include "YGDialog.h"

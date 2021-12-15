@@ -10,7 +10,7 @@ License:	LGPLv2+
 Group:		System/Libraries
 URL:		https://github.com/libyui/libyui-gtk
 Source0:	%{name}-%{version}.tar.gz
-
+Patch0:		override-protection-of-YDIALOG-object.patch
 
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libyui)
@@ -64,8 +64,7 @@ This package provides headers files for libyui-ncurses development.
 %{_includedir}/yui
 %{_libdir}/yui/lib*.so
 %{_libdir}/pkgconfig/libyui-gtk.pc
-%{_libdir}/cmake/libyui-gtk
-%doc %{_docdir}/libyui-gtk%{major}
+%doc COPYING.lgpl-2.1 COPYING.lgpl-3 HACKING README MAINTAINER TODO
 
 #-----------------------------------------------------------------------
 
@@ -87,7 +86,6 @@ This package provides headers files for libyui-ncurses development.
 
 %ninja_build
 
-%ninja_build doc
 
 %install
 

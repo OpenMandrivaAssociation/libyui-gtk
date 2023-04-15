@@ -4,7 +4,7 @@
 
 Name:		libyui-gtk
 Version:	2.52.3
-Release:	2
+Release:	3
 Summary:	UI abstraction library - GTK plugin
 License:	LGPLv2+
 Group:		System/Libraries

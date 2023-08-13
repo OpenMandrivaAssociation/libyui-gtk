@@ -1,10 +1,11 @@
-%define major 15
-%define libname %mklibname  yui %{major}-gtk
+%define major 16
+%define oldlibname %mklibname  yui 15-gtk
+%define libname %mklibname  yui-gtk
 %define develname %mklibname yui-gtk -d
 
 Name:		libyui-gtk
 Version:	2.52.3
-Release:	3
+Release:	4
 Summary:	UI abstraction library - GTK plugin
 License:	LGPLv2+
 Group:		System/Libraries
@@ -40,6 +41,7 @@ Group:		System/Libraries
 Requires:	libyui
 Provides:	%{name} = %{EVRD}
 Provides:	libyui%{major}-gtk = %{EVRD}
+%rename %{oldlibname}
 
 %description -n %{libname}
 This package contains the library needed to run programs
@@ -88,7 +90,4 @@ This package provides headers files for libyui-ncurses development.
 
 
 %install
-
 %ninja_install -C build
-
-find "%{buildroot}" -name "*.la" -delete

@@ -4,13 +4,13 @@
 %define develname %mklibname yui-gtk -d
 
 Name:		libyui-gtk
-Version:	2.52.3
-Release:	6
+Version:	2.52.5
+Release:	1
 Summary:	UI abstraction library - GTK plugin
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		https://github.com/libyui/libyui-gtk
-Source0:	https://github.com/libyui/libyui-gtk/archive/refs/tags/%{version}.tar.gz
+Source0:	https://github.com/libyui/libyui-gtk/archive/refs/tags/%{version}/%{name}-%{version}.tar.gz
 Patch0:		override-protection-of-YDIALOG-object.patch
 
 BuildRequires:	pkgconfig(libpng)

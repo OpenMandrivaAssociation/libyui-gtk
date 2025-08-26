@@ -5,13 +5,14 @@
 
 Name:		libyui-gtk
 Version:	2.52.5
-Release:	5
+Release:	6
 Summary:	UI abstraction library - GTK plugin
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		https://github.com/libyui/libyui-gtk
 Source0:	https://github.com/libyui/libyui-gtk/archive/refs/tags/%{version}/%{name}-%{version}.tar.gz
 Patch0:		override-protection-of-YDIALOG-object.patch
+Patch1:    boost-1.89.patch
 
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libyui)

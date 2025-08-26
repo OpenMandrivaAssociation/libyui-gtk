@@ -1,0 +1,13 @@
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index eddf60f..7716e68 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -14,7 +14,7 @@ pkg_get_variable(YUI_SO_MAJOR libyui soversion_major)
+ #pkg_get_variable(YUI_SO_PATCH libyui soversion_patch)
+ 
+ message (STATUS "Using ${YUI_LIBRARY_DIRS}/libyui.so.${YUI_SO_VERSION}")
+-find_package(Boost COMPONENTS system filesystem REQUIRED)
++find_package(Boost COMPONENTS filesystem REQUIRED)
+ 
+ ##### This is needed to be set for the libyui core
+ SET( SONAME_MAJOR ${YUI_SO_MAJOR} )
